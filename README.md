@@ -6,7 +6,8 @@ Backend para la gestión de productos, proveedores, usuarios, ventas y detalles 
 
 | Nombre completo | Responsabilidad |
 | --- | --- |
-| Camilo Andrés De la Cruz Arboleda | Desarrollo del proyecto |
+| Camilo Andrés De la Cruz Arboleda | Desarrollo inicial del proyecto |
+| Andrés Felipe Peña Cruz | Complementación y revisión |
 
 ## Requisitos y ejecución
 
@@ -158,7 +159,6 @@ Se comprueban el CRUD de las cinco entidades, validaciones, relaciones, precios 
 
 Proyecto académico sin autenticación ni autorización, orientado al consumo posterior desde un frontend. `sequelize.sync()` crea tablas faltantes, pero no migra tablas existentes. Antes de un despliegue público se necesita implementar autenticación y una estrategia de migraciones.
 
-Repositorio previsto: <https://github.com/Delarbol/actividad_1_progIV>. Para entregar la actividad, debe estar publicado con visibilidad pública y contener commits realizados por el integrante dentro del plazo del curso. La configuración y los archivos locales no confirman por sí solos estos requisitos.
 
 Referencias técnicas: [transacciones de Sequelize](https://sequelize.org/docs/v6/other-topics/transactions/) y [manejo de errores de Express](https://expressjs.com/en/guide/error-handling/).
 

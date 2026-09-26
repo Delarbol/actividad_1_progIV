@@ -2,12 +2,12 @@
 
 Backend para la gestión de productos, proveedores, usuarios, ventas y detalles de venta de un supermercado. Desarrollado en JavaScript con Node.js, Express, PostgreSQL y Sequelize para la Actividad Colaborativa I de Programación IV.
 
-## Integrante
+## Integrantes
 
 | Nombre completo | Responsabilidad |
 | --- | --- |
 | Camilo Andrés De la Cruz Arboleda | Desarrollo inicial del proyecto |
-| Andrés Felipe Peña Cruz | Complementación y revisión |
+| Andrés Felipe Peña Cruz | Revisión de arquitectura MVC, validación de endpoints, pruebas funcionales, documentación Swagger y complementación del README |
 
 ## Requisitos y ejecución
 

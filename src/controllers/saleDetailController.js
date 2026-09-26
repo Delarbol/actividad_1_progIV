@@ -35,7 +35,8 @@ async function mutate(req, action) {
     if (action === 'remove') return { message: 'Detalle eliminado y total actualizado.' };
     const result = await SaleDetail.findOne({ where: { saleId: sale.id, productId: req.body.productId }, transaction });
     if (current && result.id !== current.id) {
-      await result.update({ id: current.id }, { transaction });
+      await SaleDetail.update({ id: current.id }, { where: { id: result.id }, transaction });
+      return SaleDetail.findByPk(current.id, { transaction });
     }
     return result;
   });

@@ -163,3 +163,7 @@ Proyecto académico sin autenticación ni autorización, orientado al consumo po
 Referencias técnicas: [transacciones de Sequelize](https://sequelize.org/docs/v6/other-topics/transactions/) y [manejo de errores de Express](https://expressjs.com/en/guide/error-handling/).
 
 Se fija `uuid` en `11.1.1` dentro de Sequelize para incluir la corrección del [aviso GHSA-w5hq-g745-h8pq](https://github.com/advisories/GHSA-w5hq-g745-h8pq). La compatibilidad se comprueba con las pruebas de integración.
+
+### Validación funcional local
+
+Se ejecutó el backend en entorno local con PostgreSQL y se verificó desde Swagger la respuesta JSON de la API. También se revisó la disponibilidad de la documentación interactiva en `/api-docs`.

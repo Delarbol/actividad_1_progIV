@@ -1,7 +1,10 @@
+// En este archivo describimos la API que se muestra en Swagger para consultar y probar las rutas.
+// Primero definimos los tipos que se repiten en la documentación.
 const integer = { type: 'integer', minimum: 1, maximum: 2147483647 };
 const string = (maxLength) => ({ type: 'string', minLength: 1, maxLength });
 const email = { type: 'string', format: 'email', maxLength: 254 };
 const money = { type: 'string', pattern: '^\\d+\\.\\d{2}$', example: '4500.00', description: 'PostgreSQL devuelve los valores DECIMAL como cadenas.' };
+// Usamos referencias para reutilizar un esquema sin copiarlo en cada respuesta.
 const ref = (name) => ({ $ref: `#/components/schemas/${name}` });
 const object = (properties, required = Object.keys(properties)) => ({ type: 'object', properties, required, additionalProperties: false });
 
@@ -13,6 +16,8 @@ const product = {
   stock: { type: 'integer', minimum: 0, maximum: 2147483647 }, providerId: integer,
 };
 const items = { type: 'array', minItems: 1, maxItems: 100, items: ref('SaleItem'), description: 'No se permite repetir un productId.' };
+// Separamos los datos de entrada de los datos de salida, que también incluyen los campos calculados.
+// Estos esquemas documentan la API; las validaciones de las solicitudes están en validators/schemas.js.
 const schemas = {
   ProviderInput: object(provider), UserInput: object(user), ProductInput: object(product),
   SaleItem: object({ productId: integer, quantity: integer }),
@@ -28,6 +33,7 @@ const schemas = {
   Message: object({ message: { type: 'string' } }),
   Error: object({ error: object({ message: { type: 'string' }, details: { type: 'array', items: object({ field: { type: 'string' }, message: { type: 'string' } }) } }, ['message']) }),
 };
+// Dejamos ejemplos de los cuerpos que se pueden enviar desde la opción Try it out de Swagger.
 const examples = {
   Provider: { name: 'Distribuidora Central', phone: '3001234567', email: 'contacto@central.com', city: 'Manizales' },
   User: { name: 'Camilo Andrés De la Cruz Arboleda', email: 'camilo@example.com', role: 'cajero' },
@@ -35,6 +41,7 @@ const examples = {
   Sale: { userId: 1, items: [{ productId: 1, quantity: 2 }] },
   SaleDetail: { saleId: 1, productId: 2, quantity: 1 },
 };
+// Hacemos funciones auxiliares para documentar las respuestas JSON con el mismo formato de la API.
 function response(description, schema) {
   return { description, content: { 'application/json': { schema } } };
 }
@@ -55,8 +62,10 @@ for (const [path, name, tag] of [
   ['sale-details', 'SaleDetail', 'Detalles de venta'],
 ]) {
   const body = (schema, example) => ({ required: true, content: { 'application/json': { schema: ref(schema), example } } });
+  // Ventas y detalles usan un esquema de actualización distinto al de creación.
   const updateSchema = ['Sale', 'SaleDetail'].includes(name) ? `${name}Update` : `${name}Input`;
   const updateExample = name === 'SaleDetail' ? { productId: 2, quantity: 3 } : examples[name];
+  // La dirección sin id permite listar y crear; la dirección con id permite consultar, editar y eliminar.
   paths[`/api/${path}`] = {
     get: { tags: [tag], summary: 'Listar registros', responses: { 200: success({ type: 'array', items: ref(name) }), ...errors } },
     post: { tags: [tag], summary: 'Crear registro', requestBody: body(`${name}Input`, examples[name]), responses: { 201: success(ref(name)), ...errors } },
@@ -68,6 +77,7 @@ for (const [path, name, tag] of [
     delete: { tags: [tag], summary: 'Eliminar registro', responses: { 200: success(ref('Message')), ...errors } },
   };
 }
+// Finalmente reunimos los datos generales, las rutas y los esquemas en el documento OpenAPI.
 module.exports = {
   openapi: '3.0.3',
   info: { title: 'MarketSoft API', version: '1.0.0', description: 'Backend de supermercado con MVC. El total, la fecha y el precio de los detalles los calcula el servidor. Se permiten ventas vacías para agregar detalles mediante su CRUD. API académica sin autenticación.' },

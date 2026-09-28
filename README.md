@@ -167,3 +167,12 @@ Se fija `uuid` en `11.1.1` dentro de Sequelize para incluir la corrección del [
 ### Validación funcional local
 
 Se ejecutó el backend en entorno local con PostgreSQL y se verificó desde Swagger la respuesta JSON de la API. También se revisó la disponibilidad de la documentación interactiva en `/api-docs`.
+
+Adicionalmente se realizaron pruebas con Postman para re-confirmar que el funcionamiento de la API es el indicado con las validaciones requeridas. 
+Se adjuntan un par de ejemplos de consultar los usuarios y validar que no se puede registrar más de un usuario con el mismo correo electrónico.
+
+### Capturas de las pruebas
+
+![Captura de pruebas 1](screenshots/test1.png)
+
+![Captura de pruebas 2](screenshots/test2.png)
